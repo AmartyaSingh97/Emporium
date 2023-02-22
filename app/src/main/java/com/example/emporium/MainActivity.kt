@@ -124,7 +124,7 @@ fun OnBoardingScreen(
 
                 )
 
-                Box(modifier = Modifier.padding(bottom = 100.dp).
+                Box(modifier = Modifier.padding(bottom = 130.dp).
                 align(Alignment.BottomCenter)){
 
                     Button(
@@ -139,6 +139,26 @@ fun OnBoardingScreen(
                             fontFamily = Poppins,
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Center,
+                            modifier = Modifier.align(Alignment.CenterVertically),
+                        )
+                    }
+                }
+                Box(modifier = Modifier.padding(bottom = 60.dp).
+                align(Alignment.BottomCenter)){
+
+                    Button(
+                        modifier = Modifier
+                            .height(50.dp).width(230.dp),
+                        onClick = onContinueClicked,
+                        colors = ButtonDefaults.buttonColors(containerColor = Btn2.copy(0.3f)),
+                    ) {
+                        androidx.compose.material3.Text("Enter Marketplace",
+                            color = BtnText,
+                            fontSize = 18.sp,
+                            fontFamily = Poppins,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.align(Alignment.CenterVertically),
                         )
                     }
                 }
@@ -198,4 +218,5 @@ val Oswald = FontFamily(
 
 val Button = Color(0xFF51C4C6)
 val BtnText = Color(0xFF0A131D)
+val Btn2 = Color(0xFFFFFFFF)
 
