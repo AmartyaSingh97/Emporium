@@ -1,3 +1,3 @@
 # Emporium
 
-Made with ♥ by Team BroCode <\'\'>
+Made with ♥ by Team BroCode <'\'>
