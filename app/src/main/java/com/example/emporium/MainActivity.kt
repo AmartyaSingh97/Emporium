@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -358,6 +359,7 @@ fun NftList(nfts : List<NFT>){
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NFTCard(nft : NFT) {
     Card(
