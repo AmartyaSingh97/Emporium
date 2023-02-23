@@ -1,5 +1,6 @@
 package com.example.emporium
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,7 +20,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -35,8 +37,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.emporium.data.NFT
+import com.example.emporium.data.model.NftViewModel
 import com.example.emporium.ui.theme.EmporiumTheme
 
 class MainActivity : ComponentActivity() {
@@ -183,7 +187,9 @@ fun OnBoardingScreen(
 
 
 @Composable
-fun MarketPlaceScreen() {
+fun MarketPlaceScreen(
+    NftViewModel: NftViewModel = viewModel(),
+) {
     val (value, onValueChange) = remember { mutableStateOf("") }
 
     Column(
@@ -201,7 +207,9 @@ fun MarketPlaceScreen() {
 
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth().padding(10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         TextField(
@@ -220,9 +228,11 @@ fun MarketPlaceScreen() {
                             modifier = Modifier
                                 .background(
                                     Color(0xFFADEBEC).copy(0.05f),
-                                    RoundedCornerShape(12.dp)
-                                ).size(300.dp,50.dp).defaultMinSize(minHeight = 50.dp),
-
+                                    RoundedCornerShape(80.dp)
+                                )
+                                .size(300.dp, 53.dp)
+                                .defaultMinSize(minHeight = 53.dp),
+                            placeholder = { Text(text = "Search", color = Color.Gray) },
 
                             trailingIcon = {
                                 Icon(
@@ -245,8 +255,11 @@ fun MarketPlaceScreen() {
                          )
                     }
                 Box(
-                    modifier = Modifier.align(Alignment.Center).fillMaxWidth()
-                        .height(150.dp).padding(top = 20.dp, start = 10.dp,end=10.dp)
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .padding(top = 20.dp, start = 10.dp, end = 10.dp)
                 ){
                     Text(
                             text = "Welcome to",
@@ -266,45 +279,85 @@ fun MarketPlaceScreen() {
                             fontSize = 34.sp,
                             fontFamily = Poppins,
                             fontWeight = FontWeight.SemiBold,),
-                        modifier = Modifier.align(Alignment.TopStart)
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
                             .padding(top = 20.dp))
 
+                Box(
+                    modifier = Modifier
+                        .width(53.dp)
+                        .height(20.dp)
+                        .align(Alignment.CenterEnd),
+
+                ){
                     Button(
                         onClick = { },
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xff51c4c6)),
                         modifier = Modifier
-                            .width(width = 53.dp)
-                            .height(height = 20.dp).align(Alignment.CenterEnd),
-                    ) {
+                            .fillMaxSize()
+                            .align(Alignment.Center),
+                        content = {
+                            Text(
+                                text = ""
+                            )
+                        }
+                    )
                         Image(
                             painter = painterResource(id = R.drawable.vector2),
                             contentDescription = "Vector",
                             modifier = Modifier
                                 .width(width = 11.dp)
-                                .height(height = 7.dp))
-                        Spacer(
-                            modifier = Modifier
-                                .width(width = 5.dp))
+                                .height(height = 9.dp)
+                                .align(Alignment.CenterStart)
+                                .padding(start = 5.dp))
+
                         Text(
                             text = "Filter",
-                            color = Color(0xff091019),
-                            textAlign = TextAlign.Center,
                             style = TextStyle(
-                                fontSize = 9.sp))
-                    }
+                                color = Color(0xff091019),
+                                fontSize = 9.sp,
+                                fontFamily = Poppins,
+                                fontWeight = FontWeight.SemiBold,),
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(start = 10.dp))
                 }
-
-
-
-
-
                 }
             }
+
+        Box(contentAlignment = Alignment.Center){
+            Image(
+                painter = painterResource(id  = R.drawable.dotted_design),
+                contentDescription = "Dotted Design",
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1500.dp),
+                alpha = 0.08f
+            )
+        }
+        //   NftList(nfts =NftViewModel.nfts)
+
+    }
+}
+
+@Composable
+fun NftList(nfts : List<NFT>){
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(brush),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(19.dp)
+    ){
+        items(items = nfts){ nft ->
+            NFTCard(nft = nft)
+        }
+    }
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NFTCard(nft : NFT) {
     Card(
@@ -313,7 +366,7 @@ fun NFTCard(nft : NFT) {
             .height(height = 141.dp)
             .padding(all = 13.dp)
             .clip(shape = RoundedCornerShape(16.dp))
-            .background(color = Color(0xffADEBEC).copy(alpha = 0.07f)),
+            .background(color = Color(0xFFADEBEC).copy(alpha = 0.07f)),
     ){
             CardContent(
                 name = nft.name,
@@ -426,7 +479,7 @@ fun MarketplacePreview() {
 }
 
 @Preview(showBackground = true, widthDp = 319, heightDp = 141,
-    backgroundColor = R.color.black.toLong())
+    backgroundColor = 0xFF070E16, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun NFTCardPreview() {
     EmporiumTheme{

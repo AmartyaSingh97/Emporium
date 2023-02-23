@@ -1,6 +1,6 @@
 package com.example.emporium.data
 
-class NFT(
+data class NFT(
     var id: String,
     var name: String,
     var description: String,
