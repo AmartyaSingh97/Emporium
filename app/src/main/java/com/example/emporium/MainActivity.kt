@@ -22,7 +22,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,10 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.compose.rememberAsyncImagePainter
 import com.example.emporium.data.NFT
 import com.example.emporium.data.model.NftViewModel
@@ -54,43 +50,36 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             EmporiumTheme {
+
+                val navController = rememberNavController()
+                NavGraph(navController = navController)
                 // A surface container using the 'background' color from the theme
-                MyApp(modifier = Modifier.fillMaxSize())
+//                MyApp(modifier = Modifier.fillMaxSize())
             }
         }
     }
 }
-
-@Composable
-private fun MyApp(modifier: Modifier = Modifier) {
-
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MarketPlaceScreen.route){
-        composable(Screen.MarketPlaceScreen.route){
-            MarketPlaceScreen(navController = navController)
-        }
-        composable(Screen.ProfileScreenNewUser.route){
-            ProfileScreenNewUser()
-        }
-    }
-
-    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
-    Surface(modifier) {
-        if(shouldShowOnboarding){
-            OnBoardingScreen(onContinueClicked={
-                shouldShowOnboarding = false
-            })
-        }
-        else{
-            MarketPlaceScreen(navController = navController)
-        }
-    }
-}
+//
+//@Composable
+//private fun MyApp(modifier: Modifier = Modifier) {
+//
+//    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
+//    Surface(modifier) {
+//        if(shouldShowOnboarding){
+//            OnBoardingScreen(onContinueClicked={
+//                shouldShowOnboarding = false
+//            })
+//        }
+//        else{
+//            MarketPlaceScreen(navController)
+//        }
+//    }
+//}
 val brush = Brush.verticalGradient(listOf(Color(0xFF070E16), Color(0xFF0B141F)))
 
 @Composable
 fun OnBoardingScreen(
-    onContinueClicked: () -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier) {
 
         Column(
@@ -161,7 +150,8 @@ fun OnBoardingScreen(
                         modifier = Modifier
                             .height(50.dp)
                             .width(230.dp),
-                        onClick = {},
+                        onClick = {
+                        },
                         colors = ButtonDefaults.buttonColors(Button),
                     ) {
                         androidx.compose.material3.Text("Connect Wallet",
@@ -182,7 +172,9 @@ fun OnBoardingScreen(
                         modifier = Modifier
                             .height(50.dp)
                             .width(230.dp),
-                        onClick = onContinueClicked,
+                        onClick = {
+                            navController.navigate(Screen.MarketPlaceScreen.route)
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = Btn2.copy(0.3f)),
                     ) {
                         androidx.compose.material3.Text("Enter Marketplace",
@@ -519,10 +511,10 @@ fun ProfileScreenNewUser(){
                 .background(color = Color(0xFFADEBEC).copy(alpha = 0.05f)),
         ){
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 22.dp, start = 23.dp, end = 14.dp),
+                    .padding(top = 22.dp, start = 23.dp, end = 6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
                 TextField(
@@ -609,7 +601,7 @@ fun ProfileScreenNewUser(){
                 )
                 Box(
                     modifier = Modifier
-                        .size(215.dp, 100.dp)
+                        .size(220.dp, 100.dp)
                         .align(Alignment.BottomEnd)
                         .padding(top = 20.dp)
                 ){
@@ -627,7 +619,7 @@ fun ProfileScreenNewUser(){
                             textAlign = TextAlign.Center,
                             style = TextStyle(
                                 color = Color(0xFF091019),
-                                fontSize = 14.sp,
+                                fontSize = 12.sp,
                                 fontFamily = Poppins,
                                 fontWeight = FontWeight.SemiBold,)
                         )
@@ -724,7 +716,7 @@ fun NFTCardPreview() {
 fun OnboardingPreview() {
     EmporiumTheme{
         Surface(modifier = Modifier.fillMaxSize()) {
-            OnBoardingScreen(onContinueClicked = {})
+            OnBoardingScreen(navController = rememberNavController())
         }
     }
 }
