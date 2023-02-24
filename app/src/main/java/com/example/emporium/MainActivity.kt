@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.compose.rememberAsyncImagePainter
 import com.example.emporium.data.NFT
 import com.example.emporium.data.model.NftViewModel
@@ -467,6 +468,134 @@ private fun CardContent(
 
 
             }
+    }
+}
+
+
+@Composable
+fun ProfileScreenNewUser(){
+
+    val (value, onValueChange) = remember { mutableStateOf("") }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(brush)
+    ){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)
+                .padding(bottom = 25.dp)
+                .clip(
+                    shape = RoundedCornerShape(
+                        bottomEnd = 40.dp,
+                        bottomStart = 40.dp
+                    )
+                )
+                .background(color = Color(0xFFADEBEC).copy(alpha = 0.05f)),
+        ){
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 22.dp, start = 23.dp, end = 14.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                TextField(
+                    value = value,
+                    onValueChange = onValueChange,
+                    textStyle = TextStyle(
+                        color = Color.Gray,
+                        fontSize = 12.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Normal,
+                    ),
+
+                    leadingIcon = { Icon(painter = painterResource(
+                        id = R.drawable.e_logo)
+                        , null, tint = Color.Gray) },
+                    modifier = Modifier
+                        .background(
+                            Color(0xFFADEBEC).copy(0.05f),
+                            RoundedCornerShape(80.dp)
+                        )
+                        .size(300.dp, 53.dp)
+                        .defaultMinSize(minHeight = 53.dp),
+                    placeholder = { Text(text = "Search Users", color = Color.Gray) },
+
+                    trailingIcon = {
+                        Icon(
+                            Icons.Filled.Search,
+                            null,
+                            tint = Color.Gray,
+                            modifier = Modifier.clickable { /*Click Action*/ })
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        backgroundColor = Color.Transparent,
+                        cursorColor = Color.DarkGray
+                    )
+                )
+                Image(
+                    painter = painterResource(id=R.drawable.__icon__user_circle_plus_),
+                    contentDescription = "Vector",
+                    modifier = Modifier.size(32.dp,32.dp)
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(185.dp)
+                    .align(Alignment.BottomCenter)
+                    .padding(start = 23.dp,top=23.dp),
+            ){
+                Image(
+                    painter = painterResource(id = R.drawable.user_photo_big),
+                    contentDescription = "User Photo",
+                    modifier = Modifier
+                        .size(115.dp, 115.dp)
+                        .clip(shape = RoundedCornerShape(12.dp))
+                        .align(Alignment.TopStart)
+                )
+                Text(
+                    text = "Flow In",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF),
+                        fontSize = 20.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.SemiBold,
+                    ),
+                    modifier = Modifier
+                        .padding(top = 10.dp, start = 13.dp)
+                        .align(Alignment.TopCenter)
+                )
+                Text(
+                    text = "To buy & sell NFTs with ease",
+                    style = TextStyle(
+                        color = Color(0xFFFFFFFF).copy(0.5f),
+                        fontSize = 12.sp,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Normal,
+                    ),
+                    modifier = Modifier
+                        .padding(top = 48.dp, end = 49.dp)
+                        .align(Alignment.TopEnd)
+                )
+            }
+        }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ProfilePreview() {
+    EmporiumTheme{
+        Surface(modifier = Modifier.fillMaxSize()) {
+            ProfileScreenNewUser()
+        }
     }
 }
 
