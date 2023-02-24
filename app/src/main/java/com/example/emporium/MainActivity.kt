@@ -39,6 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.compose.rememberAsyncImagePainter
 import com.example.emporium.data.NFT
@@ -60,6 +64,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun MyApp(modifier: Modifier = Modifier) {
 
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Screen.MarketPlaceScreen.route){
+        composable(Screen.MarketPlaceScreen.route){
+            MarketPlaceScreen(navController = navController)
+        }
+        composable(Screen.ProfileScreenNewUser.route){
+            ProfileScreenNewUser()
+        }
+    }
+
     var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
     Surface(modifier) {
         if(shouldShowOnboarding){
@@ -68,7 +82,7 @@ private fun MyApp(modifier: Modifier = Modifier) {
             })
         }
         else{
-            MarketPlaceScreen()
+            MarketPlaceScreen(navController = navController)
         }
     }
 }
@@ -191,8 +205,10 @@ fun OnBoardingScreen(
 @Composable
 fun MarketPlaceScreen(
     NftViewModel: NftViewModel = viewModel(),
+    navController: NavController
 ) {
     val (value, onValueChange) = remember { mutableStateOf("") }
+
 
     Column(
         modifier = Modifier
@@ -253,7 +269,15 @@ fun MarketPlaceScreen(
                          Image(
                              painter = painterResource(id=R.drawable.__icon__user_circle_plus_),
                                 contentDescription = "Vector",
-                             modifier = Modifier.size(32.dp,32.dp)
+                             modifier = Modifier
+                                 .size(32.dp, 32.dp)
+                                 .clickable(
+                                     enabled = true,
+                                     onClick = {
+                                         navController.navigate(Screen.ProfileScreenNewUser.route)
+                                     }
+                                 ),
+
                          )
                     }
                 Box(
@@ -549,7 +573,7 @@ fun ProfileScreenNewUser(){
                     .fillMaxWidth()
                     .height(185.dp)
                     .align(Alignment.BottomCenter)
-                    .padding(start = 23.dp,top=23.dp),
+                    .padding(start = 23.dp, top = 23.dp),
             ){
                 Image(
                     painter = painterResource(id = R.drawable.user_photo_big),
@@ -580,10 +604,80 @@ fun ProfileScreenNewUser(){
                         fontWeight = FontWeight.Normal,
                     ),
                     modifier = Modifier
-                        .padding(top = 48.dp, end = 49.dp)
+                        .padding(top = 46.dp, end = 49.dp)
                         .align(Alignment.TopEnd)
                 )
+                Box(
+                    modifier = Modifier
+                        .size(215.dp, 100.dp)
+                        .align(Alignment.BottomEnd)
+                        .padding(top = 20.dp)
+                ){
+                    Button(
+                        onClick = { },
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(Color(0xFF51c4c6)),
+                        modifier = Modifier
+                            .width(width = 100.dp)
+                            .height(height = 40.dp)
+                            .align(Alignment.TopStart)
+                    ) {
+                        Text(
+                            text = "Sign Up",
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(
+                                color = Color(0xFF091019),
+                                fontSize = 14.sp,
+                                fontFamily = Poppins,
+                                fontWeight = FontWeight.SemiBold,)
+                        )
+                    }
+
+                }
+
             }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(580.dp),
+        ){
+            Image(
+                painter = painterResource(id  = R.drawable.dotted_design),
+                contentDescription = "Dotted Design",
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1500.dp),
+                alpha = 0.08f
+            )
+            Text(
+                text="Emporium",
+                style = TextStyle(
+                    color = Color(0xFFFFFFFF).copy(0.5f),
+                    fontSize = 28.sp,
+                    fontFamily = Oswald,
+                    fontWeight = FontWeight.Normal,
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 60.dp)
+            )
+            Text(
+                text="Made with ❤ by Team BroCode <\\>",
+                style = TextStyle(
+                    color = Color(0xFFFFFFFF).copy(0.5f),
+                    fontSize = 12.sp,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight.Medium,
+                ),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 32.dp)
+            )
+
+
         }
     }
 }
@@ -604,7 +698,7 @@ fun ProfilePreview() {
 fun MarketplacePreview() {
     EmporiumTheme{
         Surface(modifier = Modifier.fillMaxSize()) {
-            MarketPlaceScreen()
+            MarketPlaceScreen(navController = rememberNavController())
         }
     }
 }
