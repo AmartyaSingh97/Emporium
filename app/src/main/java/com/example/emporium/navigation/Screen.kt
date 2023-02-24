@@ -1,4 +1,4 @@
-package com.example.emporium
+package com.example.emporium.navigation
 
 sealed class Screen(val route : String){
     object MarketPlaceScreen : Screen("marketplace_screen")

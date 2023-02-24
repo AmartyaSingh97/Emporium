@@ -41,8 +41,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.emporium.data.NFT
-import com.example.emporium.data.model.NftViewModel
+import com.example.emporium.data.datamodel.NFT
+import com.example.emporium.data.viewmodel.NftViewModel
+import com.example.emporium.navigation.Screen
 import com.example.emporium.ui.theme.EmporiumTheme
 
 class MainActivity : ComponentActivity() {
@@ -706,7 +707,8 @@ fun NFTCardPreview() {
             NFTCard(nft = NFT("069069", "The Panda",
                 "https://picsum.photos/200", "https://picsum.photos/200",
                 "0.69", "Sanidhya", "0x123456789",
-                "April 2022", "India",   "5"))
+                "April 2022", "India",   "5")
+            )
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.emporium.data
+package com.example.emporium.data.datamodel
 
 data class NFT(
     var id: String,
