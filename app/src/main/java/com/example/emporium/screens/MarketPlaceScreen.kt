@@ -38,8 +38,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.emporium.BtnText
 import com.example.emporium.Poppins
 import com.example.emporium.R
-import com.example.emporium.data.datamodel.NFT
-import com.example.emporium.data.viewmodel.NftViewModel
+import com.example.emporium.model.datamodel.NFT
+import com.example.emporium.model.viewmodel.NftViewModel
 import com.example.emporium.navigation.Screen
 import com.example.emporium.ui.theme.EmporiumTheme
 

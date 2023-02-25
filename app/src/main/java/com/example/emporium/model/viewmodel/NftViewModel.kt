@@ -1,7 +1,7 @@
-package com.example.emporium.data.viewmodel
+package com.example.emporium.model.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.emporium.data.datamodel.NFT
+import com.example.emporium.model.datamodel.NFT
 
 class NftViewModel : ViewModel() {
 
