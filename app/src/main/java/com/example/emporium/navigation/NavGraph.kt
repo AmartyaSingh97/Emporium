@@ -1,10 +1,12 @@
-package com.example.emporium
+package com.example.emporium.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.emporium.navigation.Screen
+import com.example.emporium.screens.MarketPlaceScreen
+import com.example.emporium.screens.OnBoardingScreen
+import com.example.emporium.screens.ProfileScreenNewUser
 
 @Composable
 fun NavGraph (navController: NavHostController){
