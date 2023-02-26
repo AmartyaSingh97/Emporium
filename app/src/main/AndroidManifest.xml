@@ -28,12 +28,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <meta-data
-            android:name = "api_key"
-            android:value = "${X-Niftory-API-Key}"/>
-        <meta-data
-            android:name = "client_secret"
-            android:value = "${X-Niftory-Client-Secret}"/>
+
     </application>
 
 </manifest>

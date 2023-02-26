@@ -1,7 +1,5 @@
 package com.example.emporium
 
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,9 +14,6 @@ import com.example.emporium.ui.theme.EmporiumTheme
 
 class MainActivity : ComponentActivity() {
 
-    private var key = ""
-    var secret = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -27,21 +22,9 @@ class MainActivity : ComponentActivity() {
                 NavGraph(navController = navController)
             }
         }
-
-        val ai: ApplicationInfo = applicationContext.packageManager
-            .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
-
-        key = ai.metaData["api_key"].toString()
-        secret = ai.metaData["api_secret"].toString()
-    }
-
-    fun getKey() : String{
-        return key
-    }
-    fun getSecret() : String{
-        return secret
     }
 }
+
 
 val brush = Brush.verticalGradient(listOf(Color(0xFF070E16), Color(0xFF0B141F)))
 
