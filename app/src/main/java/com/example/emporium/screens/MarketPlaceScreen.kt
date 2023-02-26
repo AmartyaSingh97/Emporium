@@ -218,7 +218,7 @@ fun NftList(nfts : List<NFT>){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(19.dp)
     ){
-        items(items = nfts){ nft ->
+        this.items(items = nfts){ nft ->
             NFTCard(nft = nft)
         }
     }

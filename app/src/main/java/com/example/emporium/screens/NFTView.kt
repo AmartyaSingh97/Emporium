@@ -31,7 +31,7 @@ import com.example.emporium.ui.theme.EmporiumTheme
 
 @Composable
 fun NFTView(
-    nft: NFT,
+    NFT: NFT,
 ) {
 
     val (value, onValueChange) = remember { mutableStateOf("") }
@@ -107,7 +107,7 @@ fun NFTView(
                     align(Alignment.TopCenter).padding(top=27.dp)
             )
             Text(
-                text = nft.name,
+                text = NFT.name,
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 24.sp,
@@ -117,7 +117,7 @@ fun NFTView(
                 modifier = Modifier.align(Alignment.TopCenter).padding(top=190.dp)
             )
             Text(
-                text = "By ${nft.owner}",
+                text = "By ${NFT.owner}",
                 style = TextStyle(
                     color = Color.White.copy(0.5f),
                     fontSize = 14.sp,
@@ -138,7 +138,7 @@ fun NFTView(
                         .align(Alignment.Center)
                 )}
             Text(
-                text = nft.price,
+                text = NFT.price,
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,
@@ -156,7 +156,7 @@ fun NFTView(
                     .height(1.dp).width(274.dp)
             )
             Text(
-                text = nft.description,
+                text = NFT.description,
                 style = TextStyle(
                     color = Color.White.copy(0.5f),
                     fontSize = 14.sp,
@@ -227,7 +227,7 @@ fun NFTView(
 fun NFTPreview() {
     EmporiumTheme{
         Surface(modifier = Modifier.fillMaxSize()) {
-            NFTView(nft = NFT("069069", "The Panda",
+            NFTView(NFT = NFT("069069", "The Panda",
                 "The panda is one of the most favorite token" +
                         " for collectors. So what are you waiting for. Go grab it now"
                 , "https://picsum.photos/200",

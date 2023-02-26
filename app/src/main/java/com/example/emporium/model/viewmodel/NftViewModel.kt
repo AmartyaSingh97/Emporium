@@ -5,10 +5,10 @@ import com.example.emporium.model.datamodel.NFT
 
 class NftViewModel : ViewModel() {
 
-    private val _nfts = mutableListOf<NFT>()
+    private val _items = mutableListOf<NFT>()
 
-    val nfts : List<NFT>
-        get() = _nfts
+    val NFT : List<NFT>
+        get() = _items
 
 
     private fun getNfts(){

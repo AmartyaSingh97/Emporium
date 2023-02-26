@@ -1,5 +1,6 @@
 package com.example.emporium.model.datamodel
 
+
 data class NFT(
     var id: String,
     var name: String,
