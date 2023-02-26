@@ -2,10 +2,8 @@ package com.example.emporium
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
@@ -35,38 +33,69 @@ class MainActivity : ComponentActivity() {
 }
 @OptIn(DelicateCoroutinesApi::class)
 private fun post(appId: String){
+//    val retrofit = GraphQLInstance.graphQLService
+//    val paramObject = JSONObject()
+//    paramObject.put("query", """
+//        query nftModels($appId: ID) {
+//          nftModels(appId: $appId, maxResults: 50) {
+//            items {
+//              id
+//              title
+//              description
+//              nfts {
+//                id
+//              }
+//              status
+//              rarity
+//              content {
+//                files {
+//                  url
+//                  contentType
+//                }
+//              }
+//            }
+//            cursor
+//          }
+//        }
+//    """)
+    val queryString = """
+        query nftModels($appId: ID) {
+          nftModels(appId: $appId, maxResults: 50) {
+            items {
+              id
+              title
+              description
+              nfts {
+                id
+              }
+              status
+              rarity
+              content {
+                files {
+                  url
+                  contentType
+                }
+              }
+            }
+            cursor
+          }
+        }
+    """.trimIndent()
     val retrofit = GraphQLInstance.graphQLService
     val paramObject = JSONObject()
-    paramObject.put("query", "query nftModels(\"$appId\": ID) {\n" +
-            "  nftModels(appId: \"$appId\", maxResults: 50) {\n" +
-            "    items {\n" +
-            "      id\n" +
-            "      title\n" +
-            "      description\n" +
-            "      nfts {\n" +
-            "        id\n" +
-            "      }\n" +
-            "      status\n" +
-            "      rarity\n" +
-            "      content {\n" +
-            "        files {\n" +
-            "          url\n" +
-            "          contentType\n" +
-            "        }\n" +
-            "      }\n" +
-            "    }\n" +
-            "    cursor\n" +
-            "  }\n" +
-            "}")
-    GlobalScope.launch {
-        try {
-            val response = retrofit.postDynamicQuery(paramObject.toString())
-            Log.d("TAG", "post: ${response.body().toString()}")
-        }catch (e: java.lang.Exception){
-            Log.d("TAG", "post: ${e.message}")
-        }
+    paramObject.put("query", queryString)
+     GlobalScope.launch {
+         try{
+             val response = retrofit.postDynamicQuery(paramObject.toString())
+             val length = response.data.nftModels.items.size
+             Log.d("Okay", "post: $length")
+         }
+         catch (e: Exception){
+             Log.d("NOTOKAY", e.toString())
+         }
     }
 }
+
 
 val brush = Brush.verticalGradient(listOf(Color(0xFF070E16), Color(0xFF0B141F)))
 
